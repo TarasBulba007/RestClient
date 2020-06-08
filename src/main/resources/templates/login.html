@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login page</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/resources/static/css/login.css}">
+</head>
+
+<body>
+
+<!--<header>-->
+<!--    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: Green">-->
+
+<!--            <a class="navbar-brand"> CRUD App </a>-->
+<!--        <th:block th:include="menu"></th:block>-->
+
+
+<!--    </nav>-->
+<!--</header>-->
+<br>
+<div class="container col-md-3">
+
+    <form class="form-signin" action="#" th:action="@{/}"
+          method="POST">
+        <h2>Please sign in</h2>
+        <p class="p">
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="UserName" required autofocus>
+        </p>
+        <p>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+    </form>
+
+</div>
+</body>

@@ -1,0 +1,63 @@
+body{
+    background-color: rgba(239, 239, 239, 1);
+    margin: 0;
+    padding: 0;
+}
+
+.left-menu{
+    margin-top: 0;
+    width: 13%;
+    padding-left: 0;
+    padding-right: 0;
+    background: white;
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    height: 100vmax;
+    margin-left: -250px;
+    overflow-y: auto;
+
+}
+.content{
+    margin-left: 15%;
+
+}
+h2, h3 {
+    margin-top: 0;
+}
+.form-group{
+    width: 300px;
+    margin: auto;
+    text-align: center;
+}
+.row{
+    display: flex;
+}
+.panel-body{
+    background: none;
+}
+.new-user-tab{
+    padding-left: 0;
+    padding-right: 0;
+}
+.panel-heading{
+    border-radius: 0;
+}
+.nav-pills>li>a {
+    border-radius: 0;
+}
+.navbar {
+    text-align: right;
+    border-radius: inherit;
+    padding: 0;
+}
+
+.nav {
+    margin: 0;
+    padding: 0;
+}
+
+.header{
+    margin: 0;
+    padding: 0;
+}

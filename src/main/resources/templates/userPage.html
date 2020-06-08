@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+<div th:include="fragments/header"></div>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-lg-4 left-menu">
+                <div th:include="fragments/left-menu"></div>
+            </div>
+            <div class="col-md-8 col-lg-8 content">
+                <div>
+                    <h2>User-information page</h2>
+                </div>
+                <br>
+                <div class="tab-content">
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Role</th>
+                                <th>Login</th>
+                                <th>Password</th>
+                                <th>Email</th>
+                                <th>PhoneNumber</th>
+                                <th>BirthDate</th>
+                            </tr>
+                            </thead>
+                            <tr th:id="'user-' + ${user.getId()}">
+                                <td hidden="hidden" th:text="${user.enabled}"></td>
+                                <td hidden="hidden" th:text="${user.accountNonExpired}"></td>
+                                <td hidden="hidden" th:text="${user.accountNonLocked}"></td>
+                                <td hidden="hidden" th:text="${user.credentialsNonExpired}"></td>
+                                <td th:text="${user.id}"></td>
+                                <td>
+                                    <th:block th:each="role : ${user.roles}">
+                                        <span th:text="${role.role}"></span>
+                                    </th:block>
+                                </td>
+                                <td th:text="${user.username}"></td>
+                                <td th:text="'*****'"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.phone_number}"></td>
+                                <td th:text="${user.birth_date}"></td>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

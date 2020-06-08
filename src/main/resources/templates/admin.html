@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div id="user-edit-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <form action="/admin/edit_user" th:object="${user}" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit user [[${user.username}]]</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- скрытые поля. начало -->
+                    <div hidden="true">
+                        <input th:field="*{id}" id="id-for-edit"/>
+                        <input id="enabled-for-edit" th:field="*{enabled}"/>
+                        <input id="accountNonExpired-for-edit" th:field="*{accountNonExpired}"/>
+                        <input id="accountNonLocked-for-edit" th:field="*{accountNonLocked}"/>
+                        <input id="credentialsNonExpired-for-edit" th:field="*{credentialsNonExpired}"/>
+                    </div>
+                    <!-- скрытые поля. конец -->
+                    <div class="form-group">
+                        <label for="id-for-view">ID</label>
+                        <input class="form-control" id="id-for-view" disabled/>
+                    </div><br>
+                    <div class="form-group">
+                        <label for="login-for-edit">Login</label>
+                        <input th:field="*{username}" class="form-control" id="login-for-edit" placeholder="Login">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="pwd-for-edit">Password</label>
+                        <input th:field="*{password}" type="password" class="form-control" id="pwd-for-edit"
+                               placeholder="Password" name="pwd" autocomplete="new-password">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="email-for-edit">Email</label>
+                        <input th:field="*{email}" class="form-control" id="email-for-edit" placeholder="Enter email">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="phone-for-edit">PhoneNumber</label>
+                        <input th:field="*{phone_number}" class="form-control" id="phone-for-edit" placeholder="Enter phone number">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="birth_date-for-edit">BirthDate</label>
+                        <input th:field="*{birth_date}" type="date" class="form-control" id="birth_date-for-edit" placeholder="Enter birthDate">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="roles-for-edit">Role</label>
+                        <select class="form-control" id="roles-for-edit" multiple="multiple" name="rolesId">
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Edit user</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+<div class="body-div">
+    <div th:replace="fragments/header"></div>
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-4 col-lg-3 left-menu">
+                    <div th:insert="fragments/left-menu"></div>
+                </div>
+                <div class="col-sm-8 col-lg-8 content">
+                    <div>
+                        <h2>Admin panel</h2>
+                    </div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active"><a href="#users" data-toggle="tab">Users table</a></li>
+                        <li role="presentation"><a href="#new" data-toggle="tab">New User</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="users">
+                            <div class="panel panel-default">
+                                <div class="panel panel-heading">
+                                    <b>All users</b>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Role</th>
+                                            <th>Login</th>
+                                            <th>Password</th>
+                                            <th>Email</th>
+                                            <th>PhoneNumber</th>
+                                            <th>BirthDate</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody th:each="user : ${list}">
+                                        <tr th:id="'user-' + ${user.getId()}">
+                                            <td hidden="hidden" th:text="${user.enabled}"></td>
+                                            <td hidden="hidden" th:text="${user.accountNonExpired}"></td>
+                                            <td hidden="hidden" th:text="${user.accountNonLocked}"></td>
+                                            <td hidden="hidden" th:text="${user.credentialsNonExpired}"></td>
+                                            <td th:text="${user.id}"></td>
+                                            <td>
+                                                <th:block th:each="role : ${user.roles}">
+                                                    <span th:text="${role.role}"></span>
+                                                </th:block>
+                                            </td>
+                                            <td th:text="${user.username}"></td>
+                                            <td th:text="'*****'"></td>
+                                            <td th:text="${user.email}"></td>
+                                            <td th:text="${user.phone_number}"></td>
+                                            <td th:text="${user.birth_date}"></td>
+                                            <td>
+                                                <button type="button"
+                                                        class="btn btn-info"
+                                                        data-toggle="modal"
+                                                        data-target="#user-edit-modal"
+                                                        th:data-user-id="${user.id}">Edit</button>
+                                            </td>
+                                            <td>
+                                                <button type="submit"
+                                                        class="btn btn-danger"
+                                                        th:onclick="'location.href = \'' + @{/admin/delete(id=${user.id})} + '\''">Delete</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="new">
+                            <div class="container-fluid new-user-tab">
+                                <div class="panel panel-default">
+                                    <div class="panel panel-heading">
+                                        <b>Add new user</b>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form th:action="@{/admin/add}" th:object="${user}" method="post">
+                                            <!-- скрытые поля. начало -->
+                                            <div hidden="true">
+                                                <input th:field="*{id}"/>
+                                                <input th:field="*{enabled}"/>
+                                                <input th:field="*{accountNonExpired}"/>
+                                                <input th:field="*{accountNonLocked}"/>
+                                                <input th:field="*{credentialsNonExpired}"/>
+                                            </div>
+                                            <!-- скрытые поля. конец -->
+                                            <div class="form-group">
+                                                <label for="login">Login</label>
+                                                <input th:field="*{username}" class="form-control" id="login" placeholder="Login">
+                                            </div><br>
+                                            <div class="form-group">
+                                                <label for="pwd">Password</label>
+                                                <input th:field="*{password}" type="password" class="form-control" id="pwd"
+                                                       placeholder="Password" name="pwd" autocomplete="new-password">
+                                            </div><br>
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input th:field="*{email}" class="form-control" id="email" placeholder="Enter email">
+                                            </div><br>
+                                            <div class="form-group">
+                                                <label for="phone">PhoneNumber</label>
+                                                <input th:field="*{phone_number}" class="form-control" id="phone" placeholder="PhoneNumber">
+                                            </div><br>
+                                            <div class="form-group">
+                                                <label for="bdate">BirthDate</label>
+                                                <input th:field="*{birth_date}" type="date" class="form-control" id="bdate" placeholder="BirthDate">
+                                            </div><br>
+                                            <div class="form-group">
+                                                <label for="roles">Role</label>
+                                                <div class="form-control">
+                                                    <th:block th:each="role : ${allRoles}">
+                                                        <input id="roles" name="rolesId" type="checkbox"
+                                                               th:value="${role.id}"
+                                                               th:text="${role.role}"
+                                                               th:checked="${#arrays.contains(user.roles, role)}  ? 'checked'">
+                                                    </th:block>
+                                                </div>
+                                            </div><br>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-success">Add new user</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+<script type="text/javascript" src="js/admin.js"></script>
+</html>
