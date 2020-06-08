@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
 <body>
-<div th:fragment="left-menu">
-    <div class="container left-menu">
-        <ul class="nav nav-pills nav-stacked">
-            <li sec:authorize="hasRole('ADMIN')"
-                th:class="${#httpServletRequest.requestURI.contains('admin')} ? 'active'"><a href="/admin">Admin</a>
-            </li>
-            <li th:class="${#httpServletRequest.requestURI.contains('user')} ? 'active'"><a href="/user">User</a>
-            </li>
-        </ul>
+<div th:include="fragments/header"></div>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-lg-4 left-menu">
+                <div th:include="fragments/left-menu"></div>
+            </div>
+            <div class="col-md-8 col-lg-8 content">
+                <div>
+                    <h2>Access denied!</h2>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
 </body>
 </html>

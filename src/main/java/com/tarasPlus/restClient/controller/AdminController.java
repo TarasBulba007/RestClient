@@ -27,9 +27,9 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String userList(@ModelAttribute("user")User user,
+    public String userList(@ModelAttribute("user") User user,
                            @ModelAttribute("message") String message,
-                           Model model){
+                           Model model) {
         List<User> list = service.getAllUsers();
         model.addAttribute("list", list);
         model.addAttribute("allRoles", service.findAll());
@@ -38,9 +38,8 @@ public class AdminController {
 
     @PostMapping(value = "/admin/add")
     public String userAdd(@ModelAttribute("user") User newUser, Model model, @ModelAttribute("role") String role) {
-        if (!service.addUserAdmin(newUser, role)) {
-            model.addAttribute("message", environment.getRequiredProperty("invalidData"));
-        }
+        service.addUser(newUser);
+       // model.addAttribute("message", environment.getRequiredProperty("invalidData"));
         return "redirect:/admin";
     }
 
@@ -52,13 +51,13 @@ public class AdminController {
 
     @PostMapping(value = "/admin/edit_user")
     public String editUser(@ModelAttribute User user, Model model,
-                           @RequestParam(value = "rolesId") Long[] rolesId){
+                           @RequestParam(value = "rolesId") Long[] rolesId) {
         Set<Role> roles = new HashSet<>();
-        for (Long id : rolesId){
+        for (Long id : rolesId) {
             roles.add(service.findById(id));
         }
 
-        if (service.updateUser(user, roles)){
+        if (service.updateUser(user, roles)) {
             return "redirect:/admin";
         } else {
             model.addAttribute("message", environment.getRequiredProperty("invalidData"));

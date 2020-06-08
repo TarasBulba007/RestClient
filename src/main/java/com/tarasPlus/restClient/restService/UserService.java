@@ -20,7 +20,7 @@ public interface UserService extends UserDetailsService {
 
     void addUser(User user);
 
-//    boolean addUserAdmin(User user, String access);
+    boolean addUserAdmin(User user, String access);
 
     List<Role> findAll();
 

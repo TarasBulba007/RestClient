@@ -31,7 +31,7 @@ public class UserRestService implements UserService, RoleService {
 
     @Override
     public void addUser(User user) {
-        restTemplate.postForEntity(CENTRAL_SERVER_URL + "/api/users", user, User.class);
+       restTemplate.postForEntity(CENTRAL_SERVER_URL + "/api/users", user, User.class);
     }
 
     @Override
@@ -60,14 +60,14 @@ public class UserRestService implements UserService, RoleService {
         restTemplate.delete(CENTRAL_SERVER_URL + "/api/users/" + id, id);
     }
 
-//    @Override
-//    public boolean addUserAdmin(User user, String access) {
-//        if (notNullDataUser(user) && !isExistLogin(user.getUsername())) {
-//            initRole(user, access);
-//            restTemplate.postForEntity(CENTRAL_SERVER_URL + "/api/users", user, User.class);
-//        }
-//        return false;
-//    }
+    @Override
+    public boolean addUserAdmin(User user, String access) {
+        if (notNullDataUser(user) && !isExistLogin(user.getUsername())) {
+            initRole(user, access);
+            restTemplate.postForEntity(CENTRAL_SERVER_URL + "/api/users", user, User.class);
+        }
+        return false;
+    }
 
     public List<Role> findAll() {
         ResponseEntity<List> roles = restTemplate.getForEntity(CENTRAL_SERVER_URL + "/api/users/roles", List.class);
